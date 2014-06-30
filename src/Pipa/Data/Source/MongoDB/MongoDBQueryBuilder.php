@@ -3,6 +3,7 @@
 namespace Pipa\Data\Source\MongoDB;
 use stdClass;
 use MongoId;
+use MongoDate;
 use MongoRegex;
 use Pipa\Data\Criteria;
 use Pipa\Data\HasPrimaryKey;
@@ -41,7 +42,8 @@ class MongoDBQueryBuilder {
 	function deprivatizeValues(&$values) {
 		\Pipa\object_walk_recursive($values, function(&$value){
 			if (is_object($value)
-				&& !($value instanceof DateTime)) {
+				&& !($value instanceof DateTime)
+				&& !($value instanceof MongoDate)) {
 					
 				if ($value instanceof HasPrimaryKey) {
 					$value = $value->getPrimaryKeyValue();

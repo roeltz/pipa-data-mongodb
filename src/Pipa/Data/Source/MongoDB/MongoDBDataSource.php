@@ -129,6 +129,7 @@ class MongoDBDataSource implements DataSource, DocumentDataSource {
 	}
 	
 	function save(array $values, Collection $collection, $sequence = null) {
+		$this->queryBuilder->deprivatizeValues($values);
 		$this->recursiveEscape($values);
 		$this->connection->{$this->db}->{$collection->name}->insert($values, array('safe'=>true));
 		$id = $values["_id"] instanceof MongoId ? (string) $values["_id"] : $values["_id"];
